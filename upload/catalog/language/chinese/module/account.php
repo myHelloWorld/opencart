@@ -10,6 +10,7 @@ $_['text_forgotten']   = '忘记密码';
 $_['text_account']     = '我的账户';
 $_['text_edit']        = '编辑账户';
 $_['text_password']    = '更新密码';
+$_['text_address']     = '地址薄';
 $_['text_wishlist']    = '收藏列表';
 $_['text_order']       = '历史订单';
 $_['text_download']    = '下载商品';
