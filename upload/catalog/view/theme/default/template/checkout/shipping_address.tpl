@@ -36,7 +36,7 @@
       <td><input type="text" name="address_1" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_address_2; ?></td>
+      <td><span class="required">*</span> <?php echo $entry_address_2; ?></td>
       <td><input type="text" name="address_2" value="" class="large-field" /></td>
     </tr>
     <tr>

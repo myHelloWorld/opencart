@@ -21,7 +21,7 @@ $_['entry_address_format']   = '地址格式：<br /><span class="help">
 名字 = {lastname}<br />
 公司 = {company}<br />
 地址 1 = {address_1}<br />
-地址 2 = {address_2}<br />
+邮寄电话 = {address_2}<br />
 城市 = {city}<br />
 邮编 = {postcode}<br />
 国家地区 = {zone}<br />

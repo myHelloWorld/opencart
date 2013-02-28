@@ -92,7 +92,7 @@
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_address_2; ?></td>
+          <td><span class="required">*</span> <?php echo $entry_address_2; ?></td>
           <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
         </tr>
         <tr>

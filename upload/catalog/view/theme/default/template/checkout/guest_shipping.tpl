@@ -16,7 +16,7 @@
     <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_address_2; ?></td>
+    <td><span class="reuired">*</span> <?php echo $entry_address_2; ?></td>
     <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" class="large-field" /></td>
   </tr>
   <tr>

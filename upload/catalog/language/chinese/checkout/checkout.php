@@ -6,8 +6,8 @@ $_['heading_title']                  = '结账';
 $_['text_cart']                      = '购物车';
 $_['text_checkout_option']           = '第 1 步： 结账选项';
 $_['text_checkout_account']          = '第 2 步： 账户 &amp; 运单详细';
-$_['text_checkout_payment_address']  = '第 2 步： 运单地址';
-$_['text_checkout_shipping_address'] = '第 3 步： 货运地址';
+$_['text_checkout_payment_address']  = '第 2 步： 付款人地址';
+$_['text_checkout_shipping_address'] = '第 3 步： 收货人地址';
 $_['text_checkout_shipping_method']  = '第 4 步： 货运方式';
 $_['text_checkout_payment_method']   = '第 5 步： 支付方式';
 $_['text_checkout_confirm']          = '第 6 步： 确认订单';
@@ -53,13 +53,13 @@ $_['entry_customer_group']           = '企业类型:';
 $_['entry_company_id']               = '公司注册号:';
 $_['entry_tax_id']                   = '公司税号:';
 $_['entry_address_1']                = '地址 1：';
-$_['entry_address_2']                = '&nbsp;&nbsp;&nbsp;地址 2：';
+$_['entry_address_2']                = '&nbsp;&nbsp;&nbsp;邮寄电话：';
 $_['entry_postcode']                 = '邮编：';
 $_['entry_city']                     = '城市：';
 $_['entry_country']                  = '国家：';
 $_['entry_zone']                     = '地区 / 省份：';
 $_['entry_newsletter']               = '我希望订阅 %s 咨询。';
-$_['entry_shipping'] 	             = '我的货运地址和运单地址相同。';
+$_['entry_shipping'] 	             = '我的收货人地址和付款人地址相同。';
 
 // Error
 $_['error_warning']                  = '在结算时出现了问题！ 如果此问题继续存在请使用其它支付方式或<a href="%s">联系我们</a>。';
