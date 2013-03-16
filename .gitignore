@@ -9,6 +9,7 @@
 
 # Image File
 !/upload/image/no_image.jpg
+/upload/image/data/products
 
 # Image Cache Files
 /upload/image/cache/*
