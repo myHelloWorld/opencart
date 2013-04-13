@@ -8,7 +8,7 @@ $_['text_account']         = '我的账户';
 $_['text_register']        = '用户注册';
 $_['text_account_already'] = '欢迎来到我们网站，如果您是新用户，请填写下面的表单进行注册。如果您已经是本站的会员，请您直接<a href="%s">登录</a>。';
 $_['text_your_details']    = '您的个人资料';
-$_['text_your_address']    = '您的邮寄地址';
+$_['text_your_address']    = '您的地址';
 $_['text_newsletter']      = '选择订阅方式';
 $_['text_your_password']   = '您的账户密码';
 $_['text_agree']           = '我已经阅读并同意 <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>条款';
