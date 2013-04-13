@@ -10,6 +10,10 @@
 # Image File
 !/upload/image/no_image.jpg
 /upload/image/data/products
+#application data eg application logo
+/upload/image/data/application
+
+
 
 # Image Cache Files
 /upload/image/cache/*
@@ -37,3 +41,5 @@
 # /upload/backup.install/*
 # /upload/install/*
 
+#other files
+/upload/delorie.htm
