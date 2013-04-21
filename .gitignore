@@ -9,7 +9,7 @@
 
 # Image File
 !/upload/image/no_image.jpg
-/upload/image/data/products
+/upload/image/data/products/*
 #application data eg application logo
 /upload/image/data/application
 
