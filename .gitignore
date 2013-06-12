@@ -38,8 +38,8 @@
 !/upload/system/logs/index.html
 
 # If you want to ignore install file use following lines [on development mode]
-# /upload/backup.install/*
-# /upload/install/*
+/upload/backup.install/*
+/upload/install/*
 
 #other files
 /upload/delorie.htm
