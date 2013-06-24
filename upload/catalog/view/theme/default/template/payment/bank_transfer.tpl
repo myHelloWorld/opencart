@@ -14,6 +14,9 @@ $('#button-confirm').bind('click', function() {
 	$.ajax({ 
 		type: 'get',
 		url: 'index.php?route=payment/bank_transfer/confirm',
+		beforeSend: function(){
+			$('#button-confirm').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
 		success: function() {
 			location = '<?php echo $continue; ?>';
 		}		
