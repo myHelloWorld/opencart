@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Add qexpress logo</id>
+	<version>1.0.0</version>
+	<author>michael z</author>
+	<file name="catalog/view/theme/default/template/common/footer.tpl">
+		<operation>
+			<search poisition="before"><![CDATA[
+<div id="powered">
+			 ]]></search>
+			<add><![CDATA[
+<div>
+        <a href="http://www.qexpress.co.nz">
+                <img src="../../image/data/application/qexpress.png" height="85">
+                </a>
+       
+        <a href="http://www.flyway.co.nz">
+                <img src="../../image/data/application/flywayLogo.png" height="85">
+                </a>
+	<a href="http://zhidao.ibaobao.co.nz">
+		<img src="../../image/data/application/ibaobaoZhidao.png" height="85">
+	</a>
+		
+	<a href="http://jarressaestate.com">
+		<img src="../../image/data/application/jewine_logo.png" height="85" width="217">
+	</a>
+</div>	
+	]]></add>
+		</operation>
+	</file>
+</modification>
+
+
+
