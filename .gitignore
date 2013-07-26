@@ -12,7 +12,8 @@
 /upload/image/data/products/*
 #application data eg application logo
 /upload/image/data/application
-
+upload/image/data/Brand/
+upload/image/data/expiryDate/
 
 
 # Image Cache Files
@@ -43,3 +44,4 @@
 
 #other files
 /upload/delorie.htm
+upload/vqmod-2.3.2-opencart.zip
