@@ -45,3 +45,6 @@ upload/image/data/expiryDate/
 #other files
 /upload/delorie.htm
 upload/vqmod-2.3.2-opencart.zip
+/upload/vqmod/vqcache
+upload/vqmod/logs/
+upload/vqmod/mods.cache
