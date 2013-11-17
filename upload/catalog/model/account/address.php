@@ -81,7 +81,7 @@ class ModelAccountAddress extends Model {
 	public function getAddresses() {
 		$address_data = array();
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "'" . " ORDER BY CONVERT(" . DB_PREFIX . "address.lastname USING gb2312)" . ", CONVERT(" . DB_PREFIX . "address.firstname USING gb2312)" );
 	
 		foreach ($query->rows as $result) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$result['country_id'] . "'");
