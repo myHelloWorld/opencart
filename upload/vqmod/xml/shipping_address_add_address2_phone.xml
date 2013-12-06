@@ -12,6 +12,15 @@
 				<?php echo $address['address_2']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>,
 			]]></add>
 		</operation>
+
+                <operation>
+                        <search poisition="replace"><![CDATA[
+                        	<?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>,
+			]]></search>
+                        <add><![CDATA[
+                       		<?php echo $address['lastname']; ?> <?php echo $address['firstname']; ?>, 
+			 ]]></add>
+                </operation>
 	</file>
 </modification>
 
