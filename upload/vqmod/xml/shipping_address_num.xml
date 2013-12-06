@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Add qexpress logo</id>
+	<version>1.0.0</version>
+	<author>michael z</author>
+	<file name="catalog/view/theme/default/template/checkout/shipping_address.tpl">
+		<operation>
+			<search poisition="replace"><![CDATA[
+				<select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">	 
+			]]></search>
+			<add><![CDATA[
+				<select name="address_id" style="width: 100%; margin-bottom: 15px;" size="15">
+			]]></add>
+		</operation>
+	</file>
+</modification>
+
+
+
