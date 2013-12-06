@@ -6,10 +6,10 @@
 	<file name="catalog/view/theme/default/template/checkout/shipping_address.tpl">
 		<operation>
 			<search poisition="replace"><![CDATA[
-				<?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>,
+				<?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>,
 			]]></search>
 			<add><![CDATA[
-				<?php echo $address['lastname']; ?>, <?php echo $address['address_2']; ?>, <?php echo $address['address_1']; ?>,
+				<?php echo $address['address_2']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>,
 			]]></add>
 		</operation>
 	</file>
