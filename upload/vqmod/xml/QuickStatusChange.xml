@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+        <id>Ajax Quick Status Change</id>
+        <version>1.5.x</version>
+        <vqmver>1.0.8</vqmver>
+        <author>graham@g-white.co.uk</author>
+        
+		<file name="admin/language/english/english.php">
+				<operation>
+                        <search position="after"><![CDATA[
+                        $_['button_filter']
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$_['button_update']           = 'Update';
+						$_['button_update_status']           = 'Update Statuses';
+						$_['text_notify']           = 'Notify';
+						$_['text_comment']           = 'Comment';
+						$_['text_bulk_status_update']           = 'Bulk Status Update';
+						]]></add>
+                </operation>
+        </file> 
+		
+		<file name="admin/language/french/french.php" error="skip">
+				<operation>
+                        <search position="after"><![CDATA[
+                        $_['button_filter']
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$_['button_update']           = 'Actualiser';
+						$_['button_update_status']           = 'Actualiser les statuts';
+						$_['text_notify']           = 'Avertir';
+						$_['text_comment']           = 'Commentaire';
+						$_['text_bulk_status_update']           = 'Actualiser les statuts en groupe';
+						]]></add>
+                </operation>
+        </file> 
+		
+        <file name="admin/controller/sale/order.php">
+				 <operation>
+                        <search position="after"><![CDATA[
+                        $this->data['button_filter'] = $this->language->get('button_filter');
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$this->data['button_update'] = $this->language->get('button_update');
+						$this->data['button_update_status'] = $this->language->get('button_update_status');
+						$this->data['text_notify'] = $this->language->get('text_notify');
+						$this->data['text_comment'] = $this->language->get('text_comment');
+						$this->data['text_bulk_status_update'] = $this->language->get('text_bulk_status_update');
+						
+						]]></add>
+                </operation>
+                <operation>
+                        <search position="before"><![CDATA[
+                        public function history() {
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						public function addHistory() {
+							$this->language->load('sale/order');
+							
+							$json = array(); 
+							
+							$this->load->model('sale/order');
+						
+							if ($this->request->server['REQUEST_METHOD'] == 'GET') {
+								if (!$this->user->hasPermission('modify', 'sale/order')) { 
+									$json['successful'] = false;
+									$json['message'] = $this->language->get('error_permission');
+								}
+								else{ 
+									if(!isset($this->request->get['notify']))
+										$this->request->get['notify'] = 0;
+									$this->model_sale_order->addOrderHistory($this->request->get['order_id'], $this->request->get);
+									$json['successful'] = true;
+								}
+							}
+							$this->response->setOutput(json_encode($json));
+						}
+						]]></add>
+                </operation>
+        </file> 
+		
+		<file name="admin/view/template/sale/order_list.tpl">
+				<operation>
+                        <search position="replace"><![CDATA[
+                        <div class="buttons">
+                        ]]></search>
+                        <add trim="true"><![CDATA[
+						<div class="buttons"><a id="status-update-all" class="button"><span><?php echo $button_update_status; ?></span></a>
+						]]></add>
+                </operation>
+                <operation>
+                        <search position="replace"><![CDATA[
+                        <td class="left"><?php echo $order['status']; ?></td>
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						<td class="left">
+						<select name="order_status_id" id="select<?php echo $order['order_id']; ?>">
+						<?php if ($order['status'] == "" )echo '<option value="0" selected="selected"></option>'; ?>
+						  <?php foreach ($order_statuses as $order_status) { ?>
+							  <?php if ($order_status['name'] == $order['status']) { ?>
+							  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+							  <?php } else { ?>
+							  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							  <?php } ?>
+						  <?php } ?>
+						</select>
+						<?php echo $text_notify; ?>:<input type="checkbox" name="notify" id="notify<?php echo $order['order_id']; ?>"/>
+						<input type="hidden" name="comment" id="comment<?php echo $order['order_id']; ?>"/>
+						<a class="button" onClick="submitStatus(<?php echo $order['order_id']; ?>);"><span><?php echo $button_update; ?></span></a>
+						<div style="vertical-align:middle;width:16px;display:inline-block">
+						<img src="./view/image/blank_16x16.gif" id="wait<?php echo $order['order_id']; ?>" />
+						</div>
+						</td>
+						]]></add>
+                        
+                </operation>
+				<operation>
+                        <search position="after"><![CDATA[
+                        <form action="" method="post" enctype="multipart/form-data" id="form">
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						<script type="text/javascript">
+						
+						function submitStatus($id)
+						{
+							$("#wait"+$id).attr("src", "./view/image/ajax-loader.gif").show();
+							var xmlhttp;
+							
+							if (window.XMLHttpRequest)
+							  xmlhttp=new XMLHttpRequest();
+							else
+							  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+							  
+							xmlhttp.onreadystatechange=function()
+							{
+							  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+								{
+									$result = JSON.parse(xmlhttp.responseText);
+									if($result.successful){
+										$("#wait"+$id).attr("src", "./view/image/green_tick.gif");
+									}else{
+										$("#wait"+$id).attr("src", "./view/image/red_cross.gif");
+										alert($result.message);
+									}
+								}
+							};
+							
+							if(document.getElementById('notify'+$id).checked)
+								$notify = 1;
+							else
+								$notify = 0;
+							$comment = encodeURIComponent(document.getElementById('comment'+$id).value);
+							xmlhttp.open("GET",'./index.php?route=sale/order/addHistory&token=<?php echo $token; ?>&order_id='+$id+'&comment='+$comment+'&notify='+$notify+'&order_status_id='+document.getElementById('select'+$id).value,true);
+							xmlhttp.send();
+						}
+						</script>
+						]]></add>  
+                </operation>
+				<operation>
+                        <search position="before"><![CDATA[
+                        <?php echo $footer; ?>
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						<div id="dialog-form" title="<?php echo $text_bulk_status_update; ?>">
+							<form>
+							<fieldset>
+								<label for="status"><?php echo $column_status; ?></label>
+								<select name="order_status_id" id="selectAll">
+								<?php if ($order['status'] == "" )echo '<option value="0" selected="selected"></option>'; ?>
+								  <?php foreach ($order_statuses as $order_status) { ?>
+									  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+								  <?php } ?>
+								</select>
+								<br/><label for="notify"><?php echo $text_notify; ?></label>
+								<input type="checkbox" name="notify" id="notifyAll"/>
+								<br/><label for="comment"><?php echo $text_comment; ?></label><br/>
+								<textarea rows="4" cols="45" name="comment" id="commentAll"></textarea>
+							</fieldset>
+							</form>
+						</div>
+						
+						<script type="text/javascript">
+							
+							$( "#dialog-form" ).dialog({
+								autoOpen: false,
+								height: 280,
+								width: 360,
+								modal: true,
+								buttons: {
+									"<?php echo $button_update; ?>": function() {
+										$( this ).dialog( "close" );
+										$('.list > tbody input:checked').each(function()
+										{
+											if($(this).val() != "on"){
+												var $id = $(this).val();
+												var $order_status_id = $("#selectAll").val();
+												//$('notifyAll').attr('checked')
+												$('#select'+$id).val($order_status_id).attr('selected', 'selected');
+												if($('#notifyAll').attr('checked'))
+													$notify = true;
+												else
+													$notify = false;
+												$('#notify'+$id).attr('checked',$notify);
+												$('#comment'+$id).val($('#commentAll').val());
+												
+												submitStatus($id);
+											}
+										});
+									},
+									Cancel: function() {
+										$( this ).dialog( "close" );
+									}
+								}
+							});
+
+		
+							$('#status-update-all').live('click', function(event) {
+								if($('.list > tbody input:checked').length >0)
+									$( "#dialog-form" ).dialog( "open" );						
+							});
+						</script>
+						]]></add>  
+                </operation>
+        </file> 
+		<file name="admin/view/template/common/home.tpl">
+                <operation>
+                
+                        <search position="replace"><![CDATA[
+                        <td class="left"><?php echo $order['status']; ?></td>
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						<td class="left">
+						<select name="order_status_id" id="select<?php echo $order['order_id']; ?>">
+						<?php if ($order['status'] == "" )echo '<option value="0" selected="selected"></option>'; ?>
+						  <?php foreach ($order_statuses as $order_status) { ?>
+							  <?php if ($order_status['name'] == $order['status']) { ?>
+							  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+							  <?php } else { ?>
+							  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							  <?php } ?>
+						  <?php } ?>
+						</select>
+						<?php echo $text_notify; ?>:<input type="checkbox" name="notify" id="notify<?php echo $order['order_id']; ?>"/>
+						<a class="button" onClick="submitStatus(<?php echo $order['order_id']; ?>);"><span><?php echo $button_update; ?></span></a>
+						<div style="vertical-align:middle;width:16px;display:inline-block">
+						<img src="./view/image/blank_16x16.gif" id="wait<?php echo $order['order_id']; ?>" />
+						</div>
+						</td>
+						]]></add>
+                        
+                </operation>
+				<operation>
+                        <search position="before"><![CDATA[
+                        <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						<script type="text/javascript">
+						
+						function submitStatus($id)
+						{
+							$("#wait"+$id).attr("src", "./view/image/ajax-loader.gif").show();
+							var xmlhttp;
+							
+							if (window.XMLHttpRequest)
+							  xmlhttp=new XMLHttpRequest();
+							else
+							  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+							  
+							xmlhttp.onreadystatechange=function()
+							{
+							  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+								{
+									$result = JSON.parse(xmlhttp.responseText);
+									if($result.successful){
+										$("#wait"+$id).attr("src", "./view/image/green_tick.gif");
+									}else{
+										$("#wait"+$id).attr("src", "./view/image/red_cross.gif");
+										alert($result.message);
+									}
+								}
+							};
+							
+							if(document.getElementById('notify'+$id).checked)
+								$notify = 1;
+							else
+								$notify = 0;
+							xmlhttp.open("GET",'./index.php?route=sale/order/addHistory&comment=&token=<?php echo $token; ?>&order_id='+$id+'&notify='+$notify+'&order_status_id='+document.getElementById('select'+$id).value,true);
+							xmlhttp.send();
+						}
+						</script>
+						]]></add>  
+                </operation>
+        </file> 
+		<file name="admin/controller/common/home.php">
+				 <operation>
+                        <search position="before"><![CDATA[
+                        if ($this->config->get('config_currency_auto')) {
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$this->load->model('localisation/order_status');
+
+						$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+						]]></add>
+                </operation>
+				<operation>
+                        <search position="after"><![CDATA[
+                        $this->data['text_no_results'] = $this->language->get('text_no_results');
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$this->data['button_update'] = $this->language->get('button_update');
+						$this->data['text_notify'] = $this->language->get('text_notify');
+						]]></add>
+                </operation>
+        </file> 
+</modification>

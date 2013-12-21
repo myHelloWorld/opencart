@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+        <id>Print Invoice from Dashboard</id>
+        <version>1.5.x</version>
+        <vqmver>1.0.3</vqmver>
+        <author>graham@g-white.co.uk</author>
+        
+		<file name="admin/language/english/english.php">
+				<operation>
+                        <search position="after"><![CDATA[
+                        $_['button_filter']
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$_['button_invoice']           = 'Print Invoice';
+						$_['column_invoice']           = 'Invoice';
+						]]></add>
+                </operation>
+        </file> 
+		<file name="admin/language/french/french.php" error="skip">
+				<operation>
+                        <search position="after"><![CDATA[
+                        $_['button_filter']
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$_['button_invoice']           = 'Imprimer la facture';
+						$_['column_invoice']           = 'Facture';
+						]]></add>
+                </operation>
+        </file> 
+		<file name="admin/view/template/common/home.tpl">
+				<operation>
+                         <search position="before"><![CDATA[
+                        <td class="left"><?php echo $column_date_added; ?></td>
+                        ]]></search>
+                        <add><![CDATA[
+						<td class="left"><?php echo $column_invoice; ?></td>
+						]]></add>
+                </operation>
+				<operation>
+                        <search position="before"><![CDATA[
+                        <td class="left"><?php echo $order['date_added']; ?></td>
+                        ]]></search>
+                        <add><![CDATA[
+						<td class="left"><div class="buttons"><a onclick="window.open('<?php echo $order['invoice']; ?>');" class="button"><span><?php echo $button_invoice; ?></span></a></div></td>
+						]]></add>
+                </operation>
+		
+        </file> 
+		<file name="admin/controller/common/home.php">
+				<operation>
+                        <search position="after"><![CDATA[
+                        $this->data['column_status'] = $this->language->get('column_status');
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$this->data['column_invoice'] = $this->language->get('column_invoice');
+						]]></add>
+                </operation>
+				<operation>
+                        <search position="after"><![CDATA[
+                        $this->data['entry_range'] = $this->language->get('entry_range');
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						$this->data['button_invoice'] = $this->language->get('button_invoice');
+						]]></add>
+                </operation>
+				<operation>
+                        <search position="after"><![CDATA[
+						'status'     => $result['status'],
+                        ]]></search>
+                        
+                        <add><![CDATA[
+						'invoice'     =>  $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$result['order_id'], 'SSL'),
+						]]></add>
+                </operation>
+
+        </file> 
+</modification>
